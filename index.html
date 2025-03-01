@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeriodPal - Your Menstrual Health Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+        }
+        .period-tracker {
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+        }
+    </style>
+</head>
+<body class="bg-blue-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold text-teal-600">PeriodPal</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-600 hover:text-teal-600">Home</a>
+                    <a href="#dashboard" class="text-gray-600 hover:text-teal-600">Dashboard</a>
+                    <a href="#food" class="text-gray-600 hover:text-teal-600">Food</a>
+                    <a href="#community" class="text-gray-600 hover:text-teal-600">Community</a>
+                    <a href="#profile" class="text-gray-600 hover:text-teal-600">Profile</a>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMenu()" class="text-gray-600"><i class="bi bi-list text-2xl"></i></button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-4 py-2 space-y-3">
+                <a href="#home" class="block text-gray-600">Home</a>
+                <a href="#dashboard" class="block text-gray-600">Dashboard</a>
+                <a href="#food" class="block text-gray-600">Food</a>
+                <a href="#community" class="block text-gray-600">Community</a>
+                <a href="#profile" class="block text-gray-600">Profile</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page -->
+    <section id="home" class="pt-20 min-h-screen flex items-center">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold text-teal-600 mb-4">Track Your Cycle, Transform Your Life</h1>
+                    <p class="text-gray-600 mb-8">Your personal menstrual health companion with smart period tracking and personalized recommendations.</p>
+                    <div class="space-x-4">
+                        <button onclick="showModal('login')" class="bg-teal-600 text-white px-6 py-2 rounded-full hover:bg-teal-700">Login</button>
+                        <button onclick="showModal('signup')" class="border-2 border-teal-600 text-teal-600 px-6 py-2 rounded-full hover:bg-teal-50">Sign Up</button>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcwNDkyMDY5Mg&ixlib=rb-4.0.3&q=80&w=1080" alt="Wellness Illustration" class="rounded-lg shadow-xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="py-20 period-tracker">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-teal-800 mb-8">Your Cycle Dashboard</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Cycle Tracker -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Cycle Tracking</h3>
+                    <div class="calendar grid grid-cols-7 gap-2">
+                        <!-- Calendar will be populated by JavaScript -->
+                    </div>
+                </div>
+                <!-- Symptoms Logger -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Symptom Log</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="cramps" class="mr-2">
+                            <label for="cramps">Cramps</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="headache" class="mr-2">
+                            <label for="headache">Headache</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="bloating" class="mr-2">
+                            <label for="bloating">Bloating</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Predictions -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Predictions</h3>
+                    <p class="text-gray-600">Next period expected in: <span id="countdown" class="font-bold text-teal-600">14 days</span></p>
+                    <p class="text-gray-600">Fertile window: <span class="font-bold text-teal-600">Dec 15 - Dec 20</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Recommendations -->
+    <section id="food" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-teal-800 mb-8">Food Recommendations</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- AI Recommendations -->
+                <div class="bg-teal-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">AI-Suggested Meals</h3>
+                    <div id="meal-suggestions" class="space-y-4">
+                        <!-- Meal suggestions will be populated by JavaScript -->
+                    </div>
+                </div>
+                <!-- Order Food -->
+                <div class="bg-teal-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Order Food</h3>
+                    <div class="space-y-4">
+                        <input type="text" placeholder="Search for restaurants..." class="w-full p-2 rounded border">
+                        <div id="restaurant-list" class="space-y-2">
+                            <!-- Restaurant list will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community -->
+    <section id="community" class="py-20 bg-teal-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-teal-800 mb-8">Community Support</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Forums -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Discussion Forums</h3>
+                    <div id="forum-posts" class="space-y-4">
+                        <!-- Forum posts will be populated by JavaScript -->
+                    </div>
+                </div>
+                <!-- Tips -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Period Tips</h3>
+                    <div id="period-tips" class="space-y-4">
+                        <!-- Tips will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Login</h2>
+            <form class="space-y-4">
+                <input type="email" placeholder="Email" class="w-full p-2 border rounded">
+                <input type="password" placeholder="Password" class="w-full p-2 border rounded">
+                <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700">Login</button>
+            </form>
+            <button onclick="hideModal('login')" class="absolute top-4 right-4"><i class="bi bi-x text-2xl"></i></button>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Sign Up</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Full Name" class="w-full p-2 border rounded">
+                <input type="email" placeholder="Email" class="w-full p-2 border rounded">
+                <input type="password" placeholder="Password" class="w-full p-2 border rounded">
+                <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded hover:bg-teal-700">Sign Up</button>
+            </form>
+            <button onclick="hideModal('signup')" class="absolute top-4 right-4"><i class="bi bi-x text-2xl"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Modal Functions
+        function showModal(type) {
+            document.getElementById(`${type}-modal`).style.display = 'flex';
+        }
+
+        function hideModal(type) {
+            document.getElementById(`${type}-modal`).style.display = 'none';
+        }
+
+        // Calendar Generation
+        function generateCalendar() {
+            const calendar = document.querySelector('.calendar');
+            const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            
+            // Add day headers
+            days.forEach(day => {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'text-center font-bold';
+                dayEl.textContent = day;
+                calendar.appendChild(dayEl);
+            });
+
+            // Add calendar days
+            for (let i = 1; i <= 31; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'text-center p-2 border rounded hover:bg-teal-100 cursor-pointer';
+                dayEl.textContent = i;
+                calendar.appendChild(dayEl);
+            }
+        }
+
+        // Meal Suggestions
+        function populateMealSuggestions() {
+            const suggestions = [
+                { name: 'Iron-rich Spinach Salad', description: 'Perfect for energy boost' },
+                { name: 'Dark Chocolate Smoothie', description: 'Rich in magnesium' },
+                { name: 'Banana Oatmeal', description: 'Great for cramps relief' }
+            ];
+
+            const container = document.getElementById('meal-suggestions');
+            suggestions.forEach(meal => {
+                const div = document.createElement('div');
+                div.className = 'bg-white p-4 rounded shadow';
+                div.innerHTML = `
+                    <h4 class="font-semibold">${meal.name}</h4>
+                    <p class="text-gray-600">${meal.description}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Restaurant List
+        function populateRestaurants() {
+            const restaurants = [
+                { name: 'Healthy Bites', rating: 4.5, delivery: '20-30 min' },
+                { name: 'Green Kitchen', rating: 4.3, delivery: '30-40 min' },
+                { name: 'Wellness Café', rating: 4.7, delivery: '15-25 min' }
+            ];
+
+            const container = document.getElementById('restaurant-list');
+            restaurants.forEach(restaurant => {
+                const div = document.createElement('div');
+                div.className = 'bg-white p-4 rounded shadow flex justify-between items-center';
+                div.innerHTML = `
+                    <div>
+                        <h4 class="font-semibold">${restaurant.name}</h4>
+                        <p class="text-gray-600">⭐ ${restaurant.rating} • ${restaurant.delivery}</p>
+                    </div>
+                    <button class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">Order</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Forum Posts
+        function populateForumPosts() {
+            const posts = [
+                { title: 'Best period pain remedies?', replies: 23, author: 'Sarah' },
+                { title: 'Exercise during period', replies: 15, author: 'Emma' },
+                { title: 'Favorite period tracking apps', replies: 31, author: 'Lisa' }
+            ];
+
+            const container = document.getElementById('forum-posts');
+            posts.forEach(post => {
+                const div = document.createElement('div');
+                div.className = 'bg-teal-50 p-4 rounded';
+                div.innerHTML = `
+                    <h4 class="font-semibold">${post.title}</h4>
+                    <p class="text-gray-600">${post.replies} replies • Posted by ${post.author}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Period Tips
+        function populatePeriodTips() {
+            const tips = [
+                'Stay hydrated throughout your cycle',
+                'Exercise gently to reduce cramps',
+                'Get enough sleep during your period',
+                'Try heat therapy for pain relief'
+            ];
+
+            const container = document.getElementById('period-tips');
+            tips.forEach(tip => {
+                const div = document.createElement('div');
+                div.className = 'bg-teal-50 p-4 rounded';
+                div.innerHTML = `<p class="text-gray-700">💡 ${tip}</p>`;
+                container.appendChild(div);
+            });
+        }
+
+        // Initialize everything when the page loads
+        window.onload = () => {
+            generateCalendar();
+            populateMealSuggestions();
+            populateRestaurants();
+            populateForumPosts();
+            populatePeriodTips();
+        };
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
